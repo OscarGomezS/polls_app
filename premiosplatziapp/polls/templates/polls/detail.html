@@ -1,0 +1,34 @@
+<form action="{% url 'polls:vote' question.id %}" method="post"> <!-- method="post" es el método http para enviar un formulario
+, siempre hacerlo con el método post para que los datos viajen ocultos y evitar problemas de seguridad-->
+{% csrf_token %}   <!-- Protege de un ataque cross side request, activa el sistema de seguridad de django, siempre colocarlo 
+al enviar un formulario -->
+<fieldset>
+    <legend><h1>{{ question.question_text }}</h1></legend>  <!-- la pregunta como título -->
+    {% if error_message %}           <!-- Describe, si llega un error, se debe mostrar -->
+        <p><strong>{{ error_message }}</strong></p> 
+    {% endif %}
+    {% for choice in question.choice_set.all %}
+        <input 
+            type="radio"
+            name="choice"
+            id="choice{{ forloop.counter }}"
+            value="{{ choice.id }}"
+        >  <!-- forloop.counter .. devuelve el contador del ciclo for, ex: i -->
+
+        <label for="choice{{ forloop.counter }}">
+            {{ choice.choice_text }}
+        </label>
+        <br>  <!-- salto de línea -->
+    {% endfor %}
+
+</fieldset>
+<input type="submit" value="votar">  <!-- Botón para subir la respuesta -->
+</form>
+
+
+<!-- <h1>{{ question.question_text }}</h1>
+<u>
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }}</li>
+    {% endfor %}
+</u> -->

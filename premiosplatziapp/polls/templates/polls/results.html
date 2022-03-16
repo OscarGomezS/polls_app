@@ -1,0 +1,8 @@
+<h1>{{ question.question_text }}</h1>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li> <!-- vote{{ choice.votes|pluralize }} esto significa
+    que si hay más de dos votos me muestra la palabra en plural "votes" -->
+{% endfor %}
+</ul>
+<a href=" {% url 'polls:detail' question.id %} " >¿Te gustaría votar de nuevo?</a>
